@@ -3,6 +3,8 @@ from colorama import Fore
 import argparse
 import shodan
 
+
+
 banner = f"""
 
             ,
@@ -25,7 +27,7 @@ ____   ____      .__  .__           .__  .__
    \___/  (____  /____/___|  (____  /____/____(____  /
                \/          \/     \/               \/ 
                Author:  c0deninja
-               Version: v1.4
+               Version: v1.5
 
 
 """
