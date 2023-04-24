@@ -1,4 +1,4 @@
-from modules import fetch_requests
+from modules import fetch_requests, shodan_con
 from colorama import Fore
 import argparse
 import shodan
@@ -118,7 +118,7 @@ if args.dork:
 if args.target:
     if args.vulnerability:
         if args.port:
-            fetch_requests.vuln_scan(args.vulnerability, args.port)
+            fetch_requests.vuln_scan(args.target, args.port)
 
 if args.dork:
     if args.port:

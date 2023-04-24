@@ -17,7 +17,7 @@ def scan(ip: str, port: str):
 
 def cve_scan(ips: str, port: str, cve: str): 
     if port == "443":
-        print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scannning{Fore.GREEN} https://{ips}")
+        print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scannning{Fore.GREEN} https://{ips} {Fore.CYAN} {cve}")
         sub_output.scan(f"nuclei -u https://{ips} -id {cve} -c 100 -silent -j -o vulnerable.json")
         nuclei_parser.parse()
     else:
