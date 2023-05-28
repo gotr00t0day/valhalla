@@ -6,13 +6,10 @@ def scan(ip: str, port: str):
     if port == "443":
         print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scanning{Fore.GREEN} https://{ip}...\n")
         sub_output.scan(f"nuclei -u https://{ip} -t cves/ -severity medium,high,critical -c 100 -j -o vulnerable.json")
-        print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scanning{Fore.GREEN} https://{ip}...\n")
-        sub_output.scan(f"nuclei -u https://{ip} -t vulnerabilities/ -severity medium,high,critical -c 100 -silent -j -o vulnerable.json")
         nuclei_parser.parse()
     else:
         print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scannning{Fore.GREEN} {ip}:{Fore.CYAN}{port}\n")
         sub_output.scan(f"nuclei -u http://{ip}:{port} -t cves/ -severity medium,high,critical -c 100 -silent -j -o vulnerable.json")
-        sub_output.scan(f"nuclei -u http://{ip}:{port} -t vulnerabilities/ -severity medium,high,critical -c 100 -silent -j -o vulnerable.json")
         nuclei_parser.parse()
 
 def cve_scan(ips: str, port: str, cve: str): 
