@@ -38,6 +38,10 @@ Dork Scan
 ```
 python3 valhalla.py -d 'SHODAN DORK HERE' --port 80
 ```
+Scan a file with a CVE ID
+```
+python3 valhalla.py -f ips.txt --cve_id CVE-2022-30525
+```
 Scan a target with a CVE ID
 ```
 python3 valhalla.py -t IP --port 443 --cve_id CVE-2022-30525
