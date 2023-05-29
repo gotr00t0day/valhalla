@@ -46,3 +46,11 @@ Dork Scan with a CVE ID
 ```
 python3 valhalla.py -d 'DORK HERE' --cve_id CVE-2022-30525 --port 80
 ```
+Vulnerability Scan
+```
+python3 valhalla.py -t IP --port 443 --vulnerability
+```
+Vulnerability Scan with a dork
+```
+python3 valhalla.py -d 'DORK HERE' --port 443 --vulnerability
+```
