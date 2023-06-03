@@ -7,11 +7,6 @@ import os
 ##  Version: 1.1
 
 def parse():
-    dirpath = os.path.abspath(os.getcwd())
-    if not os.path.isfile(f"{dirpath}/vulnerable.json"):       
-        with open("vulnerable.json", "w") as f:
-            f.writelines()
-    else:
         with open("vulnerable.json", "r") as f:
             data = [x.strip() for x in f.readlines()]
         read_data = []
