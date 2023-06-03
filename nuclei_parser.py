@@ -1,7 +1,5 @@
 from colorama import Fore
-from modules import sub_output
 import json
-import os
 
 ##  Nuclei Parser By c0d3Ninja
 ##  Version: 1.1
