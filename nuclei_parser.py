@@ -1,10 +1,19 @@
 from colorama import Fore
 from modules import sub_output
 import json
+import os
+
+##  Nuclei Parser By c0d3Ninja
+##  Version: 1.1
 
 def parse():
-    with open("vulnerable.json", "r") as f:
-        data = [x.strip() for x in f.readlines()]
+    dirpath = os.path.abspath(os.getcwd())
+    if not os.path.isfile(f"{dirpath}/vulnerable.json"):       
+        with open("vulnerable.json", "w") as f:
+            f.writelines()
+    else:
+        with open("vulnerable.json", "r") as f:
+            data = [x.strip() for x in f.readlines()]
         read_data = []
         results = []
         for data_list in data:
