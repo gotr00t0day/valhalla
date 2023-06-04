@@ -50,8 +50,9 @@ options:
   -f FILE, --file FILE  file to scan
   -cve CVE_ID, --cve_id CVE_ID
                         scan by cve id
-  -vuln VULNERABILITY, --vulnerability VULNERABILITY
-                        scan for vulnerabilities 
+  -vuln, --vulnerability
+                        scan for vulnerabilities
+  -ips, --ipaddresses   getting ip addresses from shodan
  ```
 
  # EXAMPLE
