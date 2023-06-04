@@ -61,6 +61,10 @@ Normal Scan
 ```
 python3 valhalla.py -t IP --port 443
 ```
+Extracting ips with a shodan dork
+```
+python3 valhalla.py -d "SHODAN DORK HERE" -ips
+```
 Dork Scan
 ```
 python3 valhalla.py -d 'SHODAN DORK HERE' --port 80
