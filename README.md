@@ -9,6 +9,9 @@ cd valhalla
 
 pip3 install -r requirements.txt
 
+chmod +x install.sh
+./install.sh
+
 # USAGE
 
 ```
@@ -32,7 +35,7 @@ ____   ____      .__  .__           .__  .__
    \___/  (____  /____/___|  (____  /____/____(____  /
                \/          \/     \/               \/ 
                Author:  c0deninja
-               Version: v1.6
+               Version: v1.7
 
 
 usage: valhalla.py [-h] [-p 8080] [-t TARGET] [-d DORK] [-f FILE] [-cve CVE_ID]
