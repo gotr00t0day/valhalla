@@ -9,7 +9,7 @@ cd valhalla
 
 pip3 install -r requirements.txt
 
-chmod +x install.sh
+chmod +x install.sh<br/>
 ./install.sh
 
 # USAGE
