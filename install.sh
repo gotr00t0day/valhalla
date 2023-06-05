@@ -3,15 +3,13 @@
 # Check if Go is installed
 if ! command -v go &> /dev/null; then
     echo "Go is not installed. Installing..."
-    # Install Go
-    # Add your installation commands here
+    sudo apt install golang-go 
 fi
 
 # Check if Nuclei is installed
 if ! command -v nuclei &> /dev/null; then
     echo "Nuclei is not installed. Installing..."
-    # Install Nuclei
-    # Add your installation commands here
+    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 fi
 
 # Change directory to root
