@@ -1,5 +1,5 @@
 from colorama import Fore
-from modules import sub_output
+from modules import sub_output, nmap_parse
 import nuclei_parser
 
 
@@ -28,10 +28,17 @@ def cve_scan_file(file: str, cve: str):
     sub_output.scan(f"nuclei -id {cve} -l {file} -c 100 -silent -j -o vulnerable.json")
     nuclei_parser.parse()
 
-def masscan(file: str):
-    sub_output.scan(f"masscan -p80,81,8080,8081 -iL {file} --rate=1000 -oX masscan_ports.xml")
-    masscan_parser.masscan_parse("masscan_ports.xml")
-
+def nmap_scan(ips: str):
+    sub_output.scan(f"nmap -sV -p80,81,8080,8081 -T4 {ips} -oX nmap_results.xml")
+    results = nuclei_parser.parse()
+    if results is None:
+        pass
+    elif "80" in results:
+        print(f"{Fore.MAGENTA}[+] {Fore.WHITE}[{Fore.CYAN}{ips}{Fore.WHITE}][{Fore.YELLOW}80{Fore.WHITE}][http]{Fore.RESET}")
+    elif "81" in results:
+        print(f"{Fore.MAGENTA}[+] {Fore.WHITE}[{Fore.CYAN}{ips}{Fore.WHITE}][{Fore.YELLOW}81{Fore.WHITE}][http]{Fore.RESET}")
+    elif "443" in results:
+        print(f"{Fore.MAGENTA}[+] {Fore.WHITE}[{Fore.CYAN}{ips}{Fore.WHITE}][{Fore.YELLOW}443{Fore.WHITE}][https]{Fore.RESET}")
 
 def file_scan(file: str):
     print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scanning {Fore.GREEN}{file} for vulnerabilities...\n")

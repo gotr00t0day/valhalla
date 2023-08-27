@@ -55,7 +55,7 @@ parser.add_argument('-vuln', '--vulnerability', action='store_true',
 parser.add_argument('-ips', '--ipaddresses', action='store_true',
                    help="getting ip addresses from shodan")
 
-parser.add_argument('-ms', '--masscan', action='store_true',
+parser.add_argument('-nm', '--nmap', action='store_true',
                    help="scan for unsecure http ports")
 
 args = parser.parse_args()
@@ -85,11 +85,12 @@ if args.file:
                 fetch_requests.cve_scan_file(args.file, args.cve_id)
 
 if args.file:
-    if args.masscan:
+    if args.nmap:
         with open(f'{args.file}', 'r') as f:
             domain_list = [x.strip() for x in f.readlines()]
             for domains in domain_list:
-                fetch_requests.masscan(f"{args.file}")
+                print(f"{Fore.MAGENTA}[+] {Fore.CYAN}-{Fore.WHITE} Scanning {Fore.GREEN}{domains}{Fore.WHITE} ....\n")
+                fetch_requests.nmap_scan(f"{domains}")
 
 
 if args.file:
