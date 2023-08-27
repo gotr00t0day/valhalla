@@ -3,8 +3,6 @@ from colorama import Fore
 import argparse
 import shodan
 
-
-
 banner = f"""
 
             ,
@@ -20,12 +18,12 @@ banner = f"""
             \ |
              |/  {Fore.RED}"No system is safe"{Fore.RESET}
 
-____   ____      .__  .__           .__  .__          
-\   \ /   /____  |  | |  |__ _____  |  | |  | _____   
- \   Y   /\__  \ |  | |  |  \\\\__  \ |  | |  | \__  \  
-  \     /  / __ \|  |_|   Y  \/ __ \|  |_|  |__/ __ \_
-   \___/  (____  /____/___|  (____  /____/____(____  /
-               \/          \/     \/               \/ 
+             .__  .__           .__  .__
+___  _______  |  | |  |__ _____  |  | |  | _____
+\  \/ /\__  \ |  | |  |  \\\\__  \ |  | |  | \__  \\
+ \   /  / __ \|  |_|   Y  \/ __ \|  |_|  |__/ __ \_
+  \_/  (____  /____/___|  (____  /____/____(____  /
+            \/          \/     \/               \/
                Author:  c0deninja
                Version: v1.7
 
@@ -57,6 +55,9 @@ parser.add_argument('-vuln', '--vulnerability', action='store_true',
 parser.add_argument('-ips', '--ipaddresses', action='store_true',
                    help="getting ip addresses from shodan")
 
+parser.add_argument('-ms', '--masscan', action='store_true',
+                   help="scan for unsecure http ports")
+
 args = parser.parse_args()
 
 print(banner)
@@ -81,14 +82,22 @@ if args.file:
         with open(f'{args.file}', 'r') as f:
             domain_list = [x.strip() for x in f.readlines()]
             for domains in domain_list:
-                fetch_requests.cve_scan_file(args.file, args.cve_id) 
+                fetch_requests.cve_scan_file(args.file, args.cve_id)
 
 if args.file:
- if args.port:
-    with open(f'{args.file}', 'r') as f:
-        domain_list = (x.strip() for x in f.readlines())
-        for domains in domain_list:
-            fetch_requests.scan(domains, args.port)
+    if args.masscan:
+        with open(f'{args.file}', 'r') as f:
+            domain_list = [x.strip() for x in f.readlines()]
+            for domains in domain_list:
+                fetch_requests.masscan(f"{args.file}")
+
+
+if args.file:
+    if args.port:
+        with open(f'{args.file}', 'r') as f:
+            domain_list = (x.strip() for x in f.readlines())
+            for domains in domain_list:
+                fetch_requests.scan(domains, args.port)
 
 if args.dork:
     if args.port:
@@ -98,36 +107,39 @@ if args.dork:
                 with open('ips.txt', 'r') as f2:
                     ip_list = (x.strip() for x in f2.readlines())
                     for iplist in ip_list:
-                        fetch_requests.cve_scan_dork(iplist, args.port, args.cve_id)                  
+                        fetch_requests.cve_scan_dork(iplist, args.port, args.cve_id)
             except shodan.APIError as e:
                 print(e)
         else:
             pass
 
-if args.dork and args.port:
-    try:
-        shodan_con.ips(args.dork)
-        with open('ips.txt', 'r') as f2:
-            for iplist in (x.strip() for x in f2):
-                fetch_requests.scan(iplist, args.port)
-    except shodan.APIError as e:
-        print(e)
-    except Exception as e:
-        print(f"Error occurred while scanning: {e}")
+if args.dork:
+    if args.port:
+        try:
+            shodan_con.ips(args.dork)
+            with open('ips.txt', 'r') as f2:
+                for iplist in (x.strip() for x in f2):
+                    fetch_requests.scan(iplist, args.port)
+        except shodan.APIError as e:
+            print(e)
 
-if args.target and args.port and args.vulnerability:
-    fetch_requests.vuln_scan(args.target, args.port)
-else:
-    print("Error: Missing required argument(s)")
+if args.target:
+    if args.port:
+        if args.vulnerability:
+            fetch_requests.vuln_scan(args.target, args.port)
+        else:
+            print("Error: Missing required argument(s)")
 
-if args.dork and args.port and args.vulnerability:
-    try:
-        shodan_con.ips(args.dork)
-        with open('ips.txt', 'r') as f2:
-            ip_list = (x.strip() for x in f2.readlines())
-            for iplist in ip_list:
-                fetch_requests.vuln_dork(iplist, args.port, args.vulnerability)                  
-    except shodan.APIError as e:
-        print(e)
-    else:
-        pass
+if args.dork:
+    if args.port:
+        if args.vulnerability:
+            try:
+                shodan_con.ips(args.dork)
+                with open('ips.txt', 'r') as f2:
+                    ip_list = (x.strip() for x in f2.readlines())
+                    for iplist in ip_list:
+                        fetch_requests.vuln_dork(iplist, args.port, args.vulnerability)
+            except shodan.APIError as e:
+                print(e)
+        else:
+            pass
